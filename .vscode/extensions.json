@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    "slevesque.vscode-hexdump",
+    "ms-vscode-remote.remote-wsl"
+  ]
+}
