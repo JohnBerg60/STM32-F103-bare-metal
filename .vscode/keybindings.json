@@ -1,0 +1,8 @@
+//example key bindings, place thes in user keybindings.json
+[
+    {
+        "key": "ctrl+shift+c",
+        "command": "workbench.action.tasks.runTask",
+        "args": "compile"
+    }
+]
