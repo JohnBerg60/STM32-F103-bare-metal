@@ -9,13 +9,7 @@ OBJS  = $(patsubst %.s, $(BUILDDIR)/%.o, $(wildcard *.s))
 OBJS += $(patsubst %.c, $(BUILDDIR)/%.o, $(wildcard *.c))
 
 # Toolchain definitions (ARM bare metal defaults)
-CC = arm-none-eabi-gcc
-CX = arm-none-eabi-g++
-AS = arm-none-eabi-as
-LD = arm-none-eabi-ld
-OC = arm-none-eabi-objcopy
-OD = arm-none-eabi-objdump
-OS = arm-none-eabi-size
+TOOL=arm-none-eabi-
 
 # Common flags
 CFCOMMON = -mcpu=$(MCU)
@@ -36,26 +30,29 @@ all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).b
 # compiling c
 $(BUILDDIR)/%.o: %.c
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(CC) -c $(CFLAGS) $(INCLUDE) $(DEFINES) $< -o $@
+	$(TOOL)gcc -c $(CFLAGS) $(INCLUDE) $(DEFINES) $< -o $@
 	@echo ""
 
 # linking
 $(BUILDDIR)/$(TARGET).elf: $(OBJS)
-	$(LD) $^ $(LDFLAGS) -o $@
+	$(TOOL)ld $^ $(LDFLAGS) -o $@
 	@echo ""
 
 $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf
-	$(OC) -S -O ihex $< $@
+	$(TOOL)objcopy -S -O ihex $< $@
 
 $(BUILDDIR)/%.bin: $(BUILDDIR)/%.elf
-	$(OC)  -S -O binary $< $@	
-	$(OS) $< 
+	$(TOOL)objcopy  -S -O binary $< $@	
+	$(TOOL)size $< 
 
 clean:
 	rm -fR $(BUILDDIR)
 
 dump:
-	$(OD) -ht $(BUILDDIR)/$(TARGET).elf
+	$(TOOL)objdump -ht $(BUILDDIR)/$(TARGET).elf
+
+info:
+	$(TOOL)size $(BUILDDIR)/$(TARGET).elf
 
 debug:
 	@echo $(OBJS)

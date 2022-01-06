@@ -10,7 +10,8 @@
                 "isDefault": true
             },
             "presentation": {
-                "clear": true
+                "showReuseMessage": false,
+                "clear": true,
             }
         },
         {
@@ -23,6 +24,10 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "showReuseMessage": false,
+                "clear": true,
             }
         },
         {
@@ -35,6 +40,10 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "showReuseMessage": false,
+                "clear": true,
             }
         },
         {
@@ -47,6 +56,10 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "showReuseMessage": false,
+                "clear": true
             }
         },
         {
