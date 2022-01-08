@@ -46,15 +46,20 @@ or
 - As usb devices cannot be shared, it needs to be released before using on another machine. On WSL2, verify status with ```usbip port``` and   
 ``` sudo usbip detach -p 00``` to detach.
 
+&nbsp;
 ### Using usb in Docker
 Docker should be setup as ```Use the WSL 2 based engine```. In that case, all usb from WSL2 will be relayed into each docker container. To access the usb a container should be run with ```--privileged``` flag. No need for any other software or setup.
 
-
+&nbsp;
 ### Using usbip in VSCode, with devcontainer
-    
+The ```.devcontainer``` folder has al the files needed to start a Dockerized devellopment enviroment.
 
+&nbsp;
+## Switching projects
+As this repo contains multiple examples on the same board, just edit the Makefile to switch to another project.
 
-### Useful links
+&nbsp;
+## Useful links
 - [Installing on WSL2/Debian](https://superuser.com/questions/1686414/e-unable-to-locate-package-linux-tools-5-4-0-77-generic-on-wsl-debian-11)
 - [usbipd on github](https://github.com/dorssel/usbipd-win)
 - [st-flash doc and examples](https://www.mankier.com/1/st-flash)

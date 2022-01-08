@@ -8,7 +8,8 @@
 
     },
     "runArgs": [
-        "--name=armdev"
+        "--name=armdev",
+        "--privileged"
     ],
     "settings": {
  

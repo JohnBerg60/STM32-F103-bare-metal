@@ -71,15 +71,19 @@
             ]
         },
         {
-            "label": "debug-make",
+            "label": "device",
             "type": "shell",
             "command": "make",
             "args": [
-                "debug"
+                "device"
             ],
             "group": {
                 "kind": "build",
                 "isDefault": true
+            },
+            "presentation": {
+                "showReuseMessage": false,
+                "clear": true
             }
         }
     ]

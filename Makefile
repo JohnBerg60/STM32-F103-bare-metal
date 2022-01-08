@@ -1,24 +1,32 @@
 TARGET = firmware
 BUILDDIR = bin
+PROJECT = minimum
 
 # Define the linker script location and chip architecture.
-LDSCRIPT = FLASH.ld
+LDSCRIPT = STM32-F103.ld
 MCU  = cortex-m3
 
 OBJS  = $(patsubst %.s, $(BUILDDIR)/%.o, $(wildcard *.s))
-OBJS += $(patsubst %.c, $(BUILDDIR)/%.o, $(wildcard *.c))
+OBJS += $(patsubst $(PROJECT)/%.c, $(BUILDDIR)/%.o, $(wildcard $(PROJECT)/*.c))
+OBJS += $(patsubst $(PROJECT)/%.cpp, $(BUILDDIR)/%.o, $(wildcard $(PROJECT)/*.cpp))
+
+vpath %.s $(PROJECT)
+vpath %.c $(PROJECT)
+vpath %.cpp $(PROJECT)
 
 # Toolchain definitions (ARM bare metal defaults)
 TOOL=arm-none-eabi-
 
 # Common flags
-CFCOMMON = -mcpu=$(MCU)
+CFCOMMON = -mcpu=$(MCU) -Wall -mthumb
+
+DEBUG = -Os -g3
 
 # C compilation directives
-CFLAGS = $(CFCOMMON)
+CFLAGS = $(CFCOMMON) $(DEBUG)
 
 # Linker flags
-LDFLAGS = -T $(LDSCRIPT)
+LDFLAGS = -T $(LDSCRIPT) 
 
 INCLUDE  =
 
@@ -46,7 +54,7 @@ $(BUILDDIR)/%.bin: $(BUILDDIR)/%.elf
 	$(TOOL)size $< 
 
 clean:
-	rm -fR $(BUILDDIR)
+	rm -fr $(BUILDDIR)/*
 
 dump:
 	$(TOOL)objdump -ht $(BUILDDIR)/$(TARGET).elf
@@ -54,5 +62,11 @@ dump:
 info:
 	$(TOOL)size $(BUILDDIR)/$(TARGET).elf
 
+flash: $(BUILDDIR)/$(TARGET).bin
+	st-flash --reset write $(BUILDDIR)/$(TARGET).bin 0x8000000
+
+device:
+	st-info --probe
+		
 debug:
 	@echo $(OBJS)
