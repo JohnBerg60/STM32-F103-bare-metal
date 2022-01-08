@@ -5,8 +5,7 @@
         "args": {}
     },
     "containerEnv": {
-        "GITHUB_TOKEN": "${localEnv:GITHUB_TOKEN}",
-        "GITHUB_USER": "${localEnv:GITHUB_USER}"
+
     },
     "runArgs": [
         "--name=armdev"
@@ -15,6 +14,6 @@
  
     },
     "extensions": [
-
+        
     ]
 }
