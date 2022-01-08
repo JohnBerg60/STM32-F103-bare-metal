@@ -1,4 +1,4 @@
-# Bare metal blink on STM32 blue pill, VSCode and Dockerized
+# Bare metal STM32 blue pill, VSCode and Dockerized
 
 &nbsp;
 ## Prerequisites
