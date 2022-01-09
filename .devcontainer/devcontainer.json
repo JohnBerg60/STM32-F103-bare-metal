@@ -2,7 +2,9 @@
     "name": "F103-bare-metal",
     "build": {
         "dockerfile": "Dockerfile",
-        "args": {}
+        "args": {
+            "image": "armdev"
+        }
     },
     "containerEnv": {
 
