@@ -3,7 +3,7 @@ BUILDDIR = bin
 PROJECT = minimum
 
 # Define the linker script location and chip architecture.
-LDSCRIPT = STM32-F103.ld
+LDSCRIPT = STM32F103.ld
 MCU  = cortex-m3
 
 OBJS  = $(patsubst %.s, $(BUILDDIR)/%.o, $(wildcard *.s))
@@ -20,13 +20,14 @@ TOOL=arm-none-eabi-
 # Common flags
 CFCOMMON = -mcpu=$(MCU) -Wall -mthumb
 
-DEBUG = -Os -g3
+DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
+#DEBUG = -O1 -g # optimized, and minimal debug information
 
 # C compilation directives
 CFLAGS = $(CFCOMMON) $(DEBUG)
 
 # Linker flags
-LDFLAGS = -T $(LDSCRIPT) 
+LDFLAGS = -T $(LDSCRIPT)
 
 INCLUDE  =
 
@@ -36,14 +37,14 @@ DEFINES =
 all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).bin
 
 # compiling c
-$(BUILDDIR)/%.o: %.c
+$(BUILDDIR)/%.o: %.c Makefile
 	@test -d $(dir $@) || mkdir -p $(dir $@)
 	$(TOOL)gcc -c $(CFLAGS) $(INCLUDE) $(DEFINES) $< -o $@
 	@echo ""
 
 # linking
-$(BUILDDIR)/$(TARGET).elf: $(OBJS)
-	$(TOOL)ld $^ $(LDFLAGS) -o $@
+$(BUILDDIR)/$(TARGET).elf: $(OBJS) 
+	$(TOOL)ld $(LDFLAGS) -o $@ $^
 	@echo ""
 
 $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf

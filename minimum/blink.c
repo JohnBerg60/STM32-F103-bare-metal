@@ -23,10 +23,14 @@ void reset(void)
     }
 }
 
-int STACK[256];
+/* defined in linker script */
+extern unsigned int _estack;
 
 const void *vectors[] __attribute__ ((section (".vectors"))) =
 {
-    STACK + sizeof(STACK) / sizeof(*STACK),
+    &_estack,
     reset
 };
+
+
+

@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "cwd": "${workspaceRoot}",
+            "name": "Debug (default)",
+            "request": "launch",
+            "type": "cortex-debug",
+            "showDevDebugOutput": false,
+            "servertype": "stutil",
+            "executable": "./bin/firmware.elf",
+            "svdFile": "STM32F103.svd"
+        }
+    ]
+}

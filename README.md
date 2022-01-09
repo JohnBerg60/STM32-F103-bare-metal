@@ -63,4 +63,5 @@ As this repo contains multiple examples on the same board, just edit the Makefil
 - [Installing on WSL2/Debian](https://superuser.com/questions/1686414/e-unable-to-locate-package-linux-tools-5-4-0-77-generic-on-wsl-debian-11)
 - [usbipd on github](https://github.com/dorssel/usbipd-win)
 - [st-flash doc and examples](https://www.mankier.com/1/st-flash)
+- [Good explanation of STM32F1](http://stefanfrings.de/stm32/stm32f1.html)
 
