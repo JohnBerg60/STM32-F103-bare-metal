@@ -1,0 +1,97 @@
+
+Discarded input sections
+
+ .group         0x0000000000000000        0xc bin/blink.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ram              0x0000000020000000 0x0000000000005000 rw
+flash            0x0000000008000000 0x0000000000020000 xr
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD bin/blink.o
+                0x0000000020005000                _estack = (ORIGIN (ram) + LENGTH (ram))
+
+.vectors        0x0000000008000000        0x8
+ *(.vectors)
+ .vectors       0x0000000008000000        0x8 bin/blink.o
+                0x0000000008000000                vectors
+
+.data           0x0000000008000008        0x0
+ .data          0x0000000008000008        0x0 bin/blink.o
+
+.igot.plt       0x0000000008000008        0x0
+ .igot.plt      0x0000000008000008        0x0 bin/blink.o
+
+.text           0x0000000008000008        0x0
+ *(.text)
+ .text          0x0000000008000008        0x0 bin/blink.o
+
+.glue_7         0x0000000008000008        0x0
+ .glue_7        0x0000000008000008        0x0 linker stubs
+
+.glue_7t        0x0000000008000008        0x0
+ .glue_7t       0x0000000008000008        0x0 linker stubs
+
+.vfp11_veneer   0x0000000008000008        0x0
+ .vfp11_veneer  0x0000000008000008        0x0 linker stubs
+
+.v4_bx          0x0000000008000008        0x0
+ .v4_bx         0x0000000008000008        0x0 linker stubs
+
+.text.reset     0x0000000008000008       0x60
+ .text.reset    0x0000000008000008       0x60 bin/blink.o
+                0x0000000008000008                reset
+
+.iplt           0x0000000008000068        0x0
+ .iplt          0x0000000008000068        0x0 bin/blink.o
+
+.rel.dyn        0x0000000008000068        0x0
+ .rel.iplt      0x0000000008000068        0x0 bin/blink.o
+
+.rodata
+ *(.rodata)
+
+.bss            0x0000000020000000        0x0
+ *(.bss)
+ .bss           0x0000000020000000        0x0 bin/blink.o
+OUTPUT(bin/firmware.elf elf32-littlearm)
+
+.debug_info     0x0000000000000000       0xbb
+ .debug_info    0x0000000000000000       0xbb bin/blink.o
+
+.debug_abbrev   0x0000000000000000       0xa3
+ .debug_abbrev  0x0000000000000000       0xa3 bin/blink.o
+
+.debug_aranges  0x0000000000000000       0x20
+ .debug_aranges
+                0x0000000000000000       0x20 bin/blink.o
+
+.debug_ranges   0x0000000000000000       0x10
+ .debug_ranges  0x0000000000000000       0x10 bin/blink.o
+
+.debug_macro    0x0000000000000000      0xa59
+ .debug_macro   0x0000000000000000       0x11 bin/blink.o
+ .debug_macro   0x0000000000000011      0xa48 bin/blink.o
+
+.debug_line     0x0000000000000000       0x51
+ .debug_line    0x0000000000000000       0x51 bin/blink.o
+
+.debug_str      0x0000000000000000     0x2ca4
+ .debug_str     0x0000000000000000     0x2ca4 bin/blink.o
+                                       0x2cb1 (size before relaxing)
+
+.comment        0x0000000000000000       0x57
+ .comment       0x0000000000000000       0x57 bin/blink.o
+                                         0x58 (size before relaxing)
+
+.ARM.attributes
+                0x0000000000000000       0x33
+ .ARM.attributes
+                0x0000000000000000       0x33 bin/blink.o
+
+.debug_frame    0x0000000000000000       0x2c
+ .debug_frame   0x0000000000000000       0x2c bin/blink.o

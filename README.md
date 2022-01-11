@@ -29,7 +29,9 @@ We need to flash devices from the docker container, but USB on the windows machi
 - install ```usbipd``` from [github](https://github.com/dorssel/usbipd-win/releases/tag/v1.3.0), this is the deamon that manages sharing on the windows side.
 - Prepare a usb device for sharing from windows host. Use ```usbipd list``` to view usb sharing. After disconnecting/connecting a usb device, its state is persisted, in contrast to what the docs say. For binding/unbinding usb devices, you a elevated prompt on Windows host. Binding example:   
 ```usbipd bind -b 2-2```
-- There is a shortcut to share a device to WSL2, so you do not have to mess around with hostnames and networks: ```usbipd wsl attach --busid=<BUSID>```. This works as long as a WSL2 session is active. ```lsusb``` on WSL2 side should now show the USB device. After removing/inserting the device, it should be attached again.
+- There is a shortcut to share a device to WSL2, so you do not have to mess around with hostnames and networks:   
+ ```usbipd wsl attach --busid=<BUSID>```   
+ This works as long as a WSL2 session is active. ```lsusb``` on WSL2 side should now show the USB device. After removing/inserting the device, it should be attached again.
 
 &nbsp;
 #### WSL 2
@@ -48,11 +50,46 @@ or
 
 &nbsp;
 ### Using usb in Docker
-Docker should be setup as ```Use the WSL 2 based engine```. In that case, all usb from WSL2 will be relayed into each docker container. To access the usb a container should be run with ```--privileged``` flag. No need for any other software or setup.
+Docker should be setup as ```Use the WSL 2 based engine```. In that case, all usb from WSL2 will be relayed into each docker container. To access the usb a container should be run with ```--privileged``` flag. No need for any other software or setup. 
+
+## Setting up a development envirement
+A docker container can be setup by using the files in the docker folder, by simply renaming docker to .devcontainer, and restart vscode. When asked ```open files in devconatiner``` select yes and your good to go. However, you will be limited to 1 project and have to use the terminal from vscode. Furthermore, you are limited to this project and cannot for examples test some STM32Cube output to see how things are done. It is more conveniant to convert the docker container to wsl2, and go from there.   
+To convert:   
+```
+cd docker
+docker build -t armdev .
+docker run -it --privileged --entrypoint bash armdev
+```
+Open a new terminal and export to a tarball:   
+```
+cd %homepath%
+mkdir D:\Distros
+docker ps
+docker export <container id> > armdev.tar
+wsl --import ArmDev D:\Distros .\armdev.tar
+wsl --list
+del armdev.tar
+wsl -d ArmDev
+```
+
+When a drive is not mounted, just remount it: ```mkdir /mnt/c``` and then ```mount -t drvfs C: /mnt/c``` It will be persisted through the sessions. For gitconfig, create a link from windows to wsl: ```cd ~ && ln -s /mnt/c/Users/myuser/.gitconfig```   
+For ssh keys (for git etc.) you need to copy these over from windows. DO NOT SHARE!   
+As for the path, in Debian it is set to a fixed value in /etc/profile. Just add :$PATH to the lines where the path is set.
+
+The docker container is no longer needed, and should be stopped. Reclaim all used space by:   
+```
+docker system prune -a
+```
+
+From here, cd into a folder and start vscode from there with ```code .```. Very conveniant is to install the Terminal from the Microsoft store, and make a tab for the ArmDev wsl2.
+
+&nbsp;
+### Debugging
+This repo installs the arm remote debugger, with the cortex-debug extension. Set a breakpoint in the source, and run the debugger.
 
 &nbsp;
 ### Using usbip in VSCode, with devcontainer
-The ```.devcontainer``` folder has al the files needed to start a Dockerized devellopment enviroment.
+The ```.devcontainer``` folder has al the files needed to start a Dockerized development environment.
 
 &nbsp;
 ## Switching projects
@@ -63,5 +100,8 @@ As this repo contains multiple examples on the same board, just edit the Makefil
 - [Installing on WSL2/Debian](https://superuser.com/questions/1686414/e-unable-to-locate-package-linux-tools-5-4-0-77-generic-on-wsl-debian-11)
 - [usbipd on github](https://github.com/dorssel/usbipd-win)
 - [st-flash doc and examples](https://www.mankier.com/1/st-flash)
+- [Basic explanation of what is going on bare metal](https://karooza.net/going-bare-metal-on-stm32)
 - [Good explanation of STM32F1](http://stefanfrings.de/stm32/stm32f1.html)
+- [importing a docker images into wsl](https://docs.microsoft.com/en-us/windows/wsl/use-custom-distro)
+
 

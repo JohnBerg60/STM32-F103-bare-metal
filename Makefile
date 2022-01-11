@@ -1,12 +1,20 @@
 TARGET = firmware
 BUILDDIR = bin
-PROJECT = minimum
+PROJECT = cmsis
 
-# Define the linker script location and chip architecture.
-LDSCRIPT = STM32F103.ld
+# Define chip architecture.
 MCU  = cortex-m3
 
-OBJS  = $(patsubst %.s, $(BUILDDIR)/%.o, $(wildcard *.s))
+# things that can/should be set in the included Makefile
+INCLUDES = 
+DEFINES = 
+LDSCRIPT = 
+LDFLAGS = -nostdlib
+CCFLAGS =
+
+-include $(PROJECT)/Makefile
+
+OBJS  = $(patsubst $(PROJECT)/%.s, $(BUILDDIR)/%.o, $(wildcard $(PROJECT)/*.s))
 OBJS += $(patsubst $(PROJECT)/%.c, $(BUILDDIR)/%.o, $(wildcard $(PROJECT)/*.c))
 OBJS += $(patsubst $(PROJECT)/%.cpp, $(BUILDDIR)/%.o, $(wildcard $(PROJECT)/*.cpp))
 
@@ -17,44 +25,47 @@ vpath %.cpp $(PROJECT)
 # Toolchain definitions (ARM bare metal defaults)
 TOOL=arm-none-eabi-
 
-# Common flags
-CFCOMMON = -mcpu=$(MCU) -Wall -mthumb
+# Common flags, see: https://www.mikrocontroller.net/articles/ARM_GCC
+CFCOMMON += -mcpu=$(MCU) -mthumb -Wall -fdata-sections -ffunction-sections
 
 DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
 #DEBUG = -O1 -g # optimized, and minimal debug information
 
 # C compilation directives
 CFLAGS = $(CFCOMMON) $(DEBUG)
+CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti
 
-# Linker flags
-LDFLAGS = -T $(LDSCRIPT)
-
-INCLUDE  =
-
-DEFINES = 
+LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map
 
 # default action: build all
 all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).bin
 
+# compiling assembler
+$(BUILDDIR)/%.o: %.s Makefile
+	@test -d $(dir $@) || mkdir -p $(dir $@)
+	$(TOOL)gcc -x assembler-with-cpp -c $(CFLAGS) $< -o $@
+	@echo ""
+
 # compiling c
 $(BUILDDIR)/%.o: %.c Makefile
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(TOOL)gcc -c $(CFLAGS) $(INCLUDE) $(DEFINES) $< -o $@
-	@echo ""
+	$(TOOL)gcc -c $(CFLAGS) $(CCFLAGS) $(INCLUDES) $(DEFINES) $< -o $@
+	@echo "" 
 
 # linking
 $(BUILDDIR)/$(TARGET).elf: $(OBJS) 
-	$(TOOL)ld $(LDFLAGS) -o $@ $^
+	$(TOOL)gcc -T$(LDSCRIPT) $(LDFLAGS) -o $@ $^ 
 	@echo ""
 
 $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf
 	$(TOOL)objcopy -S -O ihex $< $@
 
 $(BUILDDIR)/%.bin: $(BUILDDIR)/%.elf
-	$(TOOL)objcopy  -S -O binary $< $@	
+	$(TOOL)objcopy -S -O binary $< $@	
 	$(TOOL)size $< 
 
 clean:
+	clear
 	rm -fr $(BUILDDIR)/*
 
 dump:
