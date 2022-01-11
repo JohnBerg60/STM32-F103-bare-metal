@@ -1,36 +1,13 @@
+Archive member included to satisfy reference by file (symbol)
+
+/usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+                              bin/startup_stm32f103xb.o (__libc_init_array)
 
 Discarded input sections
 
  .text          0x0000000000000000       0x14 bin/startup_stm32f103xb.o
  .data          0x0000000000000000        0x0 bin/startup_stm32f103xb.o
  .bss           0x0000000000000000        0x0 bin/startup_stm32f103xb.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .group         0x0000000000000000        0xc bin/init.o
- .text          0x0000000000000000        0x0 bin/init.o
- .data          0x0000000000000000        0x0 bin/init.o
- .bss           0x0000000000000000        0x0 bin/init.o
  .group         0x0000000000000000        0xc bin/blink.o
  .group         0x0000000000000000        0xc bin/blink.o
  .group         0x0000000000000000        0xc bin/blink.o
@@ -49,9 +26,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 bin/blink.o
  .data          0x0000000000000000        0x0 bin/blink.o
  .bss           0x0000000000000000        0x0 bin/blink.o
- .debug_macro   0x0000000000000000      0xa4e bin/blink.o
- .debug_macro   0x0000000000000000       0x22 bin/blink.o
- .debug_macro   0x0000000000000000       0x6a bin/blink.o
+ .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+ .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 
 Memory Configuration
 
@@ -62,6 +38,10 @@ FLASH            0x0000000008000000 0x0000000000020000 xr
 
 Linker script and memory map
 
+LOAD bin/startup_stm32f103xb.o
+LOAD bin/blink.o
+LOAD /usr/lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
+LOAD /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
                 0x0000000020005000                _estack = 0x20005000
                 0x0000000000000200                _Min_Heap_Size = 0x200
                 0x0000000000000400                _Min_Stack_Size = 0x400
@@ -73,141 +53,140 @@ Linker script and memory map
                 0x0000000008000000                g_pfnVectors
                 0x000000000800010c                . = ALIGN (0x4)
 
-.text           0x000000000800010c      0x208
+.text           0x000000000800010c      0x1e0
                 0x000000000800010c                . = ALIGN (0x4)
  *(.text)
+ .text          0x000000000800010c       0x48 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+                0x000000000800010c                __libc_init_array
  *(.text*)
  .text.Reset_Handler
-                0x000000000800010c       0x48 bin/startup_stm32f103xb.o
-                0x000000000800010c                Reset_Handler
+                0x0000000008000154       0x48 bin/startup_stm32f103xb.o
+                0x0000000008000154                Reset_Handler
  .text.Default_Handler
-                0x0000000008000154        0x2 bin/startup_stm32f103xb.o
-                0x0000000008000154                RTC_Alarm_IRQHandler
-                0x0000000008000154                EXTI2_IRQHandler
-                0x0000000008000154                DebugMon_Handler
-                0x0000000008000154                TIM1_CC_IRQHandler
-                0x0000000008000154                HardFault_Handler
-                0x0000000008000154                PVD_IRQHandler
-                0x0000000008000154                PendSV_Handler
-                0x0000000008000154                NMI_Handler
-                0x0000000008000154                EXTI3_IRQHandler
-                0x0000000008000154                EXTI0_IRQHandler
-                0x0000000008000154                I2C2_EV_IRQHandler
-                0x0000000008000154                UsageFault_Handler
-                0x0000000008000154                ADC1_2_IRQHandler
-                0x0000000008000154                SPI1_IRQHandler
-                0x0000000008000154                TAMPER_IRQHandler
-                0x0000000008000154                DMA1_Channel4_IRQHandler
-                0x0000000008000154                USART3_IRQHandler
-                0x0000000008000154                RTC_IRQHandler
-                0x0000000008000154                DMA1_Channel7_IRQHandler
-                0x0000000008000154                CAN1_RX1_IRQHandler
-                0x0000000008000154                TIM4_IRQHandler
-                0x0000000008000154                I2C1_EV_IRQHandler
-                0x0000000008000154                DMA1_Channel6_IRQHandler
-                0x0000000008000154                TIM3_IRQHandler
-                0x0000000008000154                RCC_IRQHandler
-                0x0000000008000154                TIM1_TRG_COM_IRQHandler
-                0x0000000008000154                DMA1_Channel1_IRQHandler
-                0x0000000008000154                Default_Handler
-                0x0000000008000154                EXTI15_10_IRQHandler
-                0x0000000008000154                EXTI9_5_IRQHandler
-                0x0000000008000154                SPI2_IRQHandler
-                0x0000000008000154                MemManage_Handler
-                0x0000000008000154                SVC_Handler
-                0x0000000008000154                DMA1_Channel5_IRQHandler
-                0x0000000008000154                EXTI4_IRQHandler
-                0x0000000008000154                USB_LP_CAN1_RX0_IRQHandler
-                0x0000000008000154                USB_HP_CAN1_TX_IRQHandler
-                0x0000000008000154                DMA1_Channel3_IRQHandler
-                0x0000000008000154                TIM1_UP_IRQHandler
-                0x0000000008000154                WWDG_IRQHandler
-                0x0000000008000154                TIM2_IRQHandler
-                0x0000000008000154                TIM1_BRK_IRQHandler
-                0x0000000008000154                EXTI1_IRQHandler
-                0x0000000008000154                USART2_IRQHandler
-                0x0000000008000154                I2C2_ER_IRQHandler
-                0x0000000008000154                DMA1_Channel2_IRQHandler
-                0x0000000008000154                CAN1_SCE_IRQHandler
-                0x0000000008000154                FLASH_IRQHandler
-                0x0000000008000154                BusFault_Handler
-                0x0000000008000154                USART1_IRQHandler
-                0x0000000008000154                I2C1_ER_IRQHandler
-                0x0000000008000154                USBWakeUp_IRQHandler
- *fill*         0x0000000008000156        0x2 
- .text.__libc_init_array
-                0x0000000008000158       0x70 bin/init.o
-                0x0000000008000158                __libc_init_array
+                0x000000000800019c        0x2 bin/startup_stm32f103xb.o
+                0x000000000800019c                RTC_Alarm_IRQHandler
+                0x000000000800019c                EXTI2_IRQHandler
+                0x000000000800019c                DebugMon_Handler
+                0x000000000800019c                TIM1_CC_IRQHandler
+                0x000000000800019c                HardFault_Handler
+                0x000000000800019c                PVD_IRQHandler
+                0x000000000800019c                PendSV_Handler
+                0x000000000800019c                NMI_Handler
+                0x000000000800019c                EXTI3_IRQHandler
+                0x000000000800019c                EXTI0_IRQHandler
+                0x000000000800019c                I2C2_EV_IRQHandler
+                0x000000000800019c                UsageFault_Handler
+                0x000000000800019c                ADC1_2_IRQHandler
+                0x000000000800019c                SPI1_IRQHandler
+                0x000000000800019c                TAMPER_IRQHandler
+                0x000000000800019c                DMA1_Channel4_IRQHandler
+                0x000000000800019c                USART3_IRQHandler
+                0x000000000800019c                RTC_IRQHandler
+                0x000000000800019c                DMA1_Channel7_IRQHandler
+                0x000000000800019c                CAN1_RX1_IRQHandler
+                0x000000000800019c                TIM4_IRQHandler
+                0x000000000800019c                I2C1_EV_IRQHandler
+                0x000000000800019c                DMA1_Channel6_IRQHandler
+                0x000000000800019c                TIM3_IRQHandler
+                0x000000000800019c                RCC_IRQHandler
+                0x000000000800019c                TIM1_TRG_COM_IRQHandler
+                0x000000000800019c                DMA1_Channel1_IRQHandler
+                0x000000000800019c                Default_Handler
+                0x000000000800019c                EXTI15_10_IRQHandler
+                0x000000000800019c                EXTI9_5_IRQHandler
+                0x000000000800019c                SPI2_IRQHandler
+                0x000000000800019c                MemManage_Handler
+                0x000000000800019c                SVC_Handler
+                0x000000000800019c                DMA1_Channel5_IRQHandler
+                0x000000000800019c                EXTI4_IRQHandler
+                0x000000000800019c                USB_LP_CAN1_RX0_IRQHandler
+                0x000000000800019c                USB_HP_CAN1_TX_IRQHandler
+                0x000000000800019c                DMA1_Channel3_IRQHandler
+                0x000000000800019c                TIM1_UP_IRQHandler
+                0x000000000800019c                WWDG_IRQHandler
+                0x000000000800019c                TIM2_IRQHandler
+                0x000000000800019c                TIM1_BRK_IRQHandler
+                0x000000000800019c                EXTI1_IRQHandler
+                0x000000000800019c                USART2_IRQHandler
+                0x000000000800019c                I2C2_ER_IRQHandler
+                0x000000000800019c                DMA1_Channel2_IRQHandler
+                0x000000000800019c                CAN1_SCE_IRQHandler
+                0x000000000800019c                FLASH_IRQHandler
+                0x000000000800019c                BusFault_Handler
+                0x000000000800019c                USART1_IRQHandler
+                0x000000000800019c                I2C1_ER_IRQHandler
+                0x000000000800019c                USBWakeUp_IRQHandler
+ *fill*         0x000000000800019e        0x2 
  .text.__NVIC_SetPriority
-                0x00000000080001c8       0x54 bin/blink.o
+                0x00000000080001a0       0x54 bin/blink.o
  .text.SysTick_Config
-                0x000000000800021c       0x44 bin/blink.o
+                0x00000000080001f4       0x44 bin/blink.o
  .text.SysTick_Handler
-                0x0000000008000260       0x1c bin/blink.o
-                0x0000000008000260                SysTick_Handler
+                0x0000000008000238       0x1c bin/blink.o
+                0x0000000008000238                SysTick_Handler
  .text.delay_ms
-                0x000000000800027c       0x2c bin/blink.o
-                0x000000000800027c                delay_ms
+                0x0000000008000254       0x2c bin/blink.o
+                0x0000000008000254                delay_ms
  .text.SystemInit
-                0x00000000080002a8        0xc bin/blink.o
-                0x00000000080002a8                SystemInit
- .text.main     0x00000000080002b4       0x60 bin/blink.o
-                0x00000000080002b4                main
+                0x0000000008000280        0xc bin/blink.o
+                0x0000000008000280                SystemInit
+ .text.main     0x000000000800028c       0x60 bin/blink.o
+                0x000000000800028c                main
  *(.glue_7)
- .glue_7        0x0000000008000314        0x0 linker stubs
+ .glue_7        0x00000000080002ec        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008000314        0x0 linker stubs
+ .glue_7t       0x00000000080002ec        0x0 linker stubs
  *(.eh_frame)
  *(.init)
  *(.fini)
-                0x0000000008000314                . = ALIGN (0x4)
-                0x0000000008000314                _etext = .
+                0x00000000080002ec                . = ALIGN (0x4)
+                0x00000000080002ec                _etext = .
 
-.vfp11_veneer   0x0000000008000314        0x0
- .vfp11_veneer  0x0000000008000314        0x0 linker stubs
+.vfp11_veneer   0x00000000080002ec        0x0
+ .vfp11_veneer  0x00000000080002ec        0x0 linker stubs
 
-.v4_bx          0x0000000008000314        0x0
- .v4_bx         0x0000000008000314        0x0 linker stubs
+.v4_bx          0x00000000080002ec        0x0
+ .v4_bx         0x00000000080002ec        0x0 linker stubs
 
-.iplt           0x0000000008000314        0x0
- .iplt          0x0000000008000314        0x0 bin/startup_stm32f103xb.o
+.iplt           0x00000000080002ec        0x0
+ .iplt          0x00000000080002ec        0x0 bin/startup_stm32f103xb.o
 
-.rel.dyn        0x0000000008000314        0x0
- .rel.iplt      0x0000000008000314        0x0 bin/startup_stm32f103xb.o
+.rel.dyn        0x00000000080002ec        0x0
+ .rel.iplt      0x00000000080002ec        0x0 bin/startup_stm32f103xb.o
 
-.rodata         0x0000000008000314        0x0
-                0x0000000008000314                . = ALIGN (0x4)
+.rodata         0x00000000080002ec        0x0
+                0x00000000080002ec                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
-                0x0000000008000314                . = ALIGN (0x4)
+                0x00000000080002ec                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0000000008000314        0x0
-                0x0000000008000314                __exidx_start = .
+.ARM            0x00000000080002ec        0x0
+                0x00000000080002ec                __exidx_start = .
  *(.ARM.exidx*)
-                0x0000000008000314                __exidx_end = .
+                0x00000000080002ec                __exidx_end = .
 
-.preinit_array  0x0000000008000314        0x0
-                0x0000000008000314                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x00000000080002ec        0x0
+                0x00000000080002ec                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0000000008000314                PROVIDE (__preinit_array_end = .)
+                0x00000000080002ec                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000008000314        0x0
-                0x0000000008000314                PROVIDE (__init_array_start = .)
+.init_array     0x00000000080002ec        0x0
+                0x00000000080002ec                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
-                0x0000000008000314                PROVIDE (__init_array_end = .)
+                0x00000000080002ec                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000008000314        0x0
+.fini_array     0x00000000080002ec        0x0
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0000000008000314                _sidata = LOADADDR (.data)
+                0x00000000080002ec                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000        0x4 load address 0x0000000008000314
+.data           0x0000000020000000        0x4 load address 0x00000000080002ec
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -218,11 +197,11 @@ Linker script and memory map
                 0x0000000020000004                . = ALIGN (0x4)
                 0x0000000020000004                _edata = .
 
-.igot.plt       0x0000000020000004        0x0 load address 0x0000000008000318
+.igot.plt       0x0000000020000004        0x0 load address 0x00000000080002f0
  .igot.plt      0x0000000020000004        0x0 bin/startup_stm32f103xb.o
                 0x0000000020000004                . = ALIGN (0x4)
 
-.bss            0x0000000020000004        0x4 load address 0x0000000008000318
+.bss            0x0000000020000004        0x4 load address 0x00000000080002f0
                 0x0000000020000004                _sbss = .
                 0x0000000020000004                __bss_start__ = _sbss
  *(.bss)
@@ -236,7 +215,7 @@ Linker script and memory map
                 0x0000000020000008                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000008      0x600 load address 0x0000000008000318
+                0x0000000020000008      0x600 load address 0x00000000080002f0
                 0x0000000020000008                . = ALIGN (0x8)
                 [!provide]                        PROVIDE (end = .)
                 [!provide]                        PROVIDE (_end = .)
@@ -252,94 +231,72 @@ Linker script and memory map
  .ARM.attributes
                 0x0000000000000000       0x21 bin/startup_stm32f103xb.o
  .ARM.attributes
-                0x0000000000000021       0x33 bin/init.o
+                0x0000000000000021       0x33 bin/blink.o
  .ARM.attributes
-                0x0000000000000054       0x33 bin/blink.o
-LOAD bin/startup_stm32f103xb.o
-LOAD bin/init.o
-LOAD bin/blink.o
+                0x0000000000000054       0x2d /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 OUTPUT(bin/firmware.elf elf32-littlearm)
 
-.debug_line     0x0000000000000000      0x4d0
+.debug_line     0x0000000000000000      0x379
  .debug_line    0x0000000000000000       0x7b bin/startup_stm32f103xb.o
- .debug_line    0x000000000000007b      0x211 bin/init.o
- .debug_line    0x000000000000028c      0x244 bin/blink.o
+ .debug_line    0x000000000000007b      0x244 bin/blink.o
+ .debug_line    0x00000000000002bf       0xba /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 
-.debug_info     0x0000000000000000      0x878
+.debug_info     0x0000000000000000      0x88e
  .debug_info    0x0000000000000000       0x22 bin/startup_stm32f103xb.o
- .debug_info    0x0000000000000022       0xf3 bin/init.o
- .debug_info    0x0000000000000115      0x763 bin/blink.o
+ .debug_info    0x0000000000000022      0x763 bin/blink.o
+ .debug_info    0x0000000000000785      0x109 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 
-.debug_abbrev   0x0000000000000000      0x297
+.debug_abbrev   0x0000000000000000      0x2b2
  .debug_abbrev  0x0000000000000000       0x12 bin/startup_stm32f103xb.o
- .debug_abbrev  0x0000000000000012       0x9f bin/init.o
- .debug_abbrev  0x00000000000000b1      0x1e6 bin/blink.o
+ .debug_abbrev  0x0000000000000012      0x1e6 bin/blink.o
+ .debug_abbrev  0x00000000000001f8       0xba /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 
 .debug_aranges  0x0000000000000000       0x90
  .debug_aranges
                 0x0000000000000000       0x28 bin/startup_stm32f103xb.o
  .debug_aranges
-                0x0000000000000028       0x20 bin/init.o
+                0x0000000000000028       0x48 bin/blink.o
  .debug_aranges
-                0x0000000000000048       0x48 bin/blink.o
+                0x0000000000000070       0x20 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
 
-.debug_str      0x0000000000000000    0x57034
+.debug_str      0x0000000000000000    0x54990
  .debug_str     0x0000000000000000       0x5b bin/startup_stm32f103xb.o
- .debug_str     0x000000000000005b     0x58cd bin/init.o
-                                       0x5a5e (size before relaxing)
- .debug_str     0x0000000000005928    0x5170c bin/blink.o
-                                      0x54a98 (size before relaxing)
+ .debug_str     0x000000000000005b    0x547b9 bin/blink.o
+                                      0x54aab (size before relaxing)
+ .debug_str     0x0000000000054814      0x17c /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+                                        0x20b (size before relaxing)
 
-.debug_ranges   0x0000000000000000       0x68
+.debug_ranges   0x0000000000000000       0x58
  .debug_ranges  0x0000000000000000       0x20 bin/startup_stm32f103xb.o
- .debug_ranges  0x0000000000000020       0x10 bin/init.o
- .debug_ranges  0x0000000000000030       0x38 bin/blink.o
+ .debug_ranges  0x0000000000000020       0x38 bin/blink.o
 
-.debug_macro    0x0000000000000000    0x1098b
- .debug_macro   0x0000000000000000      0x13e bin/init.o
- .debug_macro   0x000000000000013e      0xa4e bin/init.o
- .debug_macro   0x0000000000000b8c       0x22 bin/init.o
- .debug_macro   0x0000000000000bae       0x4c bin/init.o
- .debug_macro   0x0000000000000bfa       0x18 bin/init.o
- .debug_macro   0x0000000000000c12       0x94 bin/init.o
- .debug_macro   0x0000000000000ca6       0x35 bin/init.o
- .debug_macro   0x0000000000000cdb       0x34 bin/init.o
- .debug_macro   0x0000000000000d0f       0x57 bin/init.o
- .debug_macro   0x0000000000000d66      0x174 bin/init.o
- .debug_macro   0x0000000000000eda      0x339 bin/init.o
- .debug_macro   0x0000000000001213       0x10 bin/init.o
- .debug_macro   0x0000000000001223       0x52 bin/init.o
- .debug_macro   0x0000000000001275       0x1f bin/init.o
- .debug_macro   0x0000000000001294       0x43 bin/init.o
- .debug_macro   0x00000000000012d7       0x20 bin/init.o
- .debug_macro   0x00000000000012f7       0x6a bin/init.o
- .debug_macro   0x0000000000001361       0x1c bin/init.o
- .debug_macro   0x000000000000137d       0x52 bin/init.o
- .debug_macro   0x00000000000013cf       0x40 bin/init.o
- .debug_macro   0x000000000000140f       0x10 bin/init.o
- .debug_macro   0x000000000000141f       0x40 bin/init.o
- .debug_macro   0x000000000000145f       0xd7 bin/init.o
- .debug_macro   0x0000000000001536       0x1c bin/init.o
- .debug_macro   0x0000000000001552       0x3d bin/init.o
- .debug_macro   0x000000000000158f       0xbc bin/blink.o
- .debug_macro   0x000000000000164b       0x8e bin/blink.o
- .debug_macro   0x00000000000016d9       0x51 bin/blink.o
- .debug_macro   0x000000000000172a       0xef bin/blink.o
- .debug_macro   0x0000000000001819      0x1df bin/blink.o
- .debug_macro   0x00000000000019f8       0x2e bin/blink.o
- .debug_macro   0x0000000000001a26       0x22 bin/blink.o
- .debug_macro   0x0000000000001a48       0x1c bin/blink.o
- .debug_macro   0x0000000000001a64       0x22 bin/blink.o
- .debug_macro   0x0000000000001a86       0xe5 bin/blink.o
- .debug_macro   0x0000000000001b6b      0xd15 bin/blink.o
- .debug_macro   0x0000000000002880     0xe09e bin/blink.o
- .debug_macro   0x000000000001091e       0x6d bin/blink.o
+.debug_macro    0x0000000000000000     0xfed6
+ .debug_macro   0x0000000000000000       0xbc bin/blink.o
+ .debug_macro   0x00000000000000bc      0xa4e bin/blink.o
+ .debug_macro   0x0000000000000b0a       0x22 bin/blink.o
+ .debug_macro   0x0000000000000b2c       0x8e bin/blink.o
+ .debug_macro   0x0000000000000bba       0x51 bin/blink.o
+ .debug_macro   0x0000000000000c0b       0xef bin/blink.o
+ .debug_macro   0x0000000000000cfa       0x6a bin/blink.o
+ .debug_macro   0x0000000000000d64      0x1df bin/blink.o
+ .debug_macro   0x0000000000000f43       0x2e bin/blink.o
+ .debug_macro   0x0000000000000f71       0x22 bin/blink.o
+ .debug_macro   0x0000000000000f93       0x1c bin/blink.o
+ .debug_macro   0x0000000000000faf       0x22 bin/blink.o
+ .debug_macro   0x0000000000000fd1       0xe5 bin/blink.o
+ .debug_macro   0x00000000000010b6      0xd15 bin/blink.o
+ .debug_macro   0x0000000000001dcb     0xe09e bin/blink.o
+ .debug_macro   0x000000000000fe69       0x6d bin/blink.o
 
-.comment        0x0000000000000000       0x57
- .comment       0x0000000000000000       0x57 bin/init.o
+.comment        0x0000000000000000       0xae
+ .comment       0x0000000000000000       0x57 bin/blink.o
                                          0x58 (size before relaxing)
- .comment       0x0000000000000057       0x58 bin/blink.o
+ .comment       0x0000000000000057       0x57 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+                                         0x58 (size before relaxing)
 
-.debug_frame    0x0000000000000000      0x114
- .debug_frame   0x0000000000000000       0x34 bin/init.o
- .debug_frame   0x0000000000000034       0xe0 bin/blink.o
+.debug_frame    0x0000000000000000      0x10c
+ .debug_frame   0x0000000000000000       0xe0 bin/blink.o
+ .debug_frame   0x00000000000000e0       0x2c /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)
+
+.debug_loc      0x0000000000000000       0xa2
+ .debug_loc     0x0000000000000000       0xa2 /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a(lib_a-init.o)

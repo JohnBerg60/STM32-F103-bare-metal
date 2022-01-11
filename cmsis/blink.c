@@ -23,9 +23,10 @@ void delay_ms(int ms)
 
 // called in assembler startup file
 void SystemInit (void) { }
+void _init(void) { }
 
 int main()
-{
+{    
     // Initialize systick timer for 1 ms intervals
     SysTick_Config(SystemCoreClock/1000);
 

@@ -9,7 +9,7 @@ MCU  = cortex-m3
 INCLUDES = 
 DEFINES = 
 LDSCRIPT = 
-LDFLAGS = -nostdlib
+LDFLAGS = -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -nostdlib -lgcc -lc
 CCFLAGS =
 
 -include $(PROJECT)/Makefile
@@ -26,7 +26,8 @@ vpath %.cpp $(PROJECT)
 TOOL=arm-none-eabi-
 
 # Common flags, see: https://www.mikrocontroller.net/articles/ARM_GCC
-CFCOMMON += -mcpu=$(MCU) -mthumb -Wall -fdata-sections -ffunction-sections
+CFCOMMON += -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -fmessage-length=0 -fdata-sections -ffunction-sections
+ASFLAGS += $(CFCOMMON) 
 
 DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
 #DEBUG = -O1 -g # optimized, and minimal debug information
@@ -35,7 +36,7 @@ DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info
 CFLAGS = $(CFCOMMON) $(DEBUG)
 CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti
 
-LDFLAGS += -Map=$(BUILDDIR)/$(TARGET).map --gc-sections
+LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map -Wl,--gc-sections
 
 # default action: build all
 all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).bin
@@ -43,7 +44,7 @@ all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).b
 # compiling assembler
 $(BUILDDIR)/%.o: %.s Makefile
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(TOOL)gcc -x assembler-with-cpp -c $(CFLAGS) $< -o $@
+	$(TOOL)gcc -x assembler-with-cpp -c $(ASFLAGS) $(DEBUG) $< -o $@
 	@echo ""
 
 # compiling c
@@ -52,9 +53,9 @@ $(BUILDDIR)/%.o: %.c Makefile
 	$(TOOL)gcc -c $(CFLAGS) $(CCFLAGS) $(INCLUDES) $(DEFINES) $< -o $@
 	@echo "" 
 
-# linking
+# linking: let gcc pas stuff to the linker
 $(BUILDDIR)/$(TARGET).elf: $(OBJS) 
-	$(TOOL)ld -T$(LDSCRIPT) $(LDFLAGS) -o $@ $^ 
+	$(TOOL)gcc $^  -T$(LDSCRIPT) $(LDFLAGS) -o $@ 
 	@echo ""
 
 $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf
@@ -70,6 +71,9 @@ clean:
 
 dump:
 	$(TOOL)objdump -ht $(BUILDDIR)/$(TARGET).elf
+
+disassemble:
+	$(TOOL)objdump -d $(BUILDDIR)/$(TARGET).elf
 
 info:
 	$(TOOL)size $(BUILDDIR)/$(TARGET).elf
