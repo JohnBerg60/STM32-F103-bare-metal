@@ -1,97 +1,345 @@
 
 Discarded input sections
 
+ .text          0x0000000000000000       0x14 bin/startup_stm32f103xb.o
+ .data          0x0000000000000000        0x0 bin/startup_stm32f103xb.o
+ .bss           0x0000000000000000        0x0 bin/startup_stm32f103xb.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .group         0x0000000000000000        0xc bin/init.o
+ .text          0x0000000000000000        0x0 bin/init.o
+ .data          0x0000000000000000        0x0 bin/init.o
+ .bss           0x0000000000000000        0x0 bin/init.o
  .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .text          0x0000000000000000        0x0 bin/blink.o
+ .data          0x0000000000000000        0x0 bin/blink.o
+ .bss           0x0000000000000000        0x0 bin/blink.o
+ .debug_macro   0x0000000000000000      0xa4e bin/blink.o
+ .debug_macro   0x0000000000000000       0x22 bin/blink.o
+ .debug_macro   0x0000000000000000       0x6a bin/blink.o
 
 Memory Configuration
 
 Name             Origin             Length             Attributes
-ram              0x0000000020000000 0x0000000000005000 rw
-flash            0x0000000008000000 0x0000000000020000 xr
+RAM              0x0000000020000000 0x0000000000005000 xrw
+FLASH            0x0000000008000000 0x0000000000020000 xr
 *default*        0x0000000000000000 0xffffffffffffffff
 
 Linker script and memory map
 
-LOAD bin/blink.o
-                0x0000000020005000                _estack = (ORIGIN (ram) + LENGTH (ram))
+                0x0000000020005000                _estack = 0x20005000
+                0x0000000000000200                _Min_Heap_Size = 0x200
+                0x0000000000000400                _Min_Stack_Size = 0x400
 
-.vectors        0x0000000008000000        0x8
- *(.vectors)
- .vectors       0x0000000008000000        0x8 bin/blink.o
-                0x0000000008000000                vectors
+.isr_vector     0x0000000008000000      0x10c
+                0x0000000008000000                . = ALIGN (0x4)
+ *(.isr_vector)
+ .isr_vector    0x0000000008000000      0x10c bin/startup_stm32f103xb.o
+                0x0000000008000000                g_pfnVectors
+                0x000000000800010c                . = ALIGN (0x4)
 
-.data           0x0000000008000008        0x0
- .data          0x0000000008000008        0x0 bin/blink.o
-
-.igot.plt       0x0000000008000008        0x0
- .igot.plt      0x0000000008000008        0x0 bin/blink.o
-
-.text           0x0000000008000008        0x0
+.text           0x000000000800010c      0x208
+                0x000000000800010c                . = ALIGN (0x4)
  *(.text)
- .text          0x0000000008000008        0x0 bin/blink.o
+ *(.text*)
+ .text.Reset_Handler
+                0x000000000800010c       0x48 bin/startup_stm32f103xb.o
+                0x000000000800010c                Reset_Handler
+ .text.Default_Handler
+                0x0000000008000154        0x2 bin/startup_stm32f103xb.o
+                0x0000000008000154                RTC_Alarm_IRQHandler
+                0x0000000008000154                EXTI2_IRQHandler
+                0x0000000008000154                DebugMon_Handler
+                0x0000000008000154                TIM1_CC_IRQHandler
+                0x0000000008000154                HardFault_Handler
+                0x0000000008000154                PVD_IRQHandler
+                0x0000000008000154                PendSV_Handler
+                0x0000000008000154                NMI_Handler
+                0x0000000008000154                EXTI3_IRQHandler
+                0x0000000008000154                EXTI0_IRQHandler
+                0x0000000008000154                I2C2_EV_IRQHandler
+                0x0000000008000154                UsageFault_Handler
+                0x0000000008000154                ADC1_2_IRQHandler
+                0x0000000008000154                SPI1_IRQHandler
+                0x0000000008000154                TAMPER_IRQHandler
+                0x0000000008000154                DMA1_Channel4_IRQHandler
+                0x0000000008000154                USART3_IRQHandler
+                0x0000000008000154                RTC_IRQHandler
+                0x0000000008000154                DMA1_Channel7_IRQHandler
+                0x0000000008000154                CAN1_RX1_IRQHandler
+                0x0000000008000154                TIM4_IRQHandler
+                0x0000000008000154                I2C1_EV_IRQHandler
+                0x0000000008000154                DMA1_Channel6_IRQHandler
+                0x0000000008000154                TIM3_IRQHandler
+                0x0000000008000154                RCC_IRQHandler
+                0x0000000008000154                TIM1_TRG_COM_IRQHandler
+                0x0000000008000154                DMA1_Channel1_IRQHandler
+                0x0000000008000154                Default_Handler
+                0x0000000008000154                EXTI15_10_IRQHandler
+                0x0000000008000154                EXTI9_5_IRQHandler
+                0x0000000008000154                SPI2_IRQHandler
+                0x0000000008000154                MemManage_Handler
+                0x0000000008000154                SVC_Handler
+                0x0000000008000154                DMA1_Channel5_IRQHandler
+                0x0000000008000154                EXTI4_IRQHandler
+                0x0000000008000154                USB_LP_CAN1_RX0_IRQHandler
+                0x0000000008000154                USB_HP_CAN1_TX_IRQHandler
+                0x0000000008000154                DMA1_Channel3_IRQHandler
+                0x0000000008000154                TIM1_UP_IRQHandler
+                0x0000000008000154                WWDG_IRQHandler
+                0x0000000008000154                TIM2_IRQHandler
+                0x0000000008000154                TIM1_BRK_IRQHandler
+                0x0000000008000154                EXTI1_IRQHandler
+                0x0000000008000154                USART2_IRQHandler
+                0x0000000008000154                I2C2_ER_IRQHandler
+                0x0000000008000154                DMA1_Channel2_IRQHandler
+                0x0000000008000154                CAN1_SCE_IRQHandler
+                0x0000000008000154                FLASH_IRQHandler
+                0x0000000008000154                BusFault_Handler
+                0x0000000008000154                USART1_IRQHandler
+                0x0000000008000154                I2C1_ER_IRQHandler
+                0x0000000008000154                USBWakeUp_IRQHandler
+ *fill*         0x0000000008000156        0x2 
+ .text.__libc_init_array
+                0x0000000008000158       0x70 bin/init.o
+                0x0000000008000158                __libc_init_array
+ .text.__NVIC_SetPriority
+                0x00000000080001c8       0x54 bin/blink.o
+ .text.SysTick_Config
+                0x000000000800021c       0x44 bin/blink.o
+ .text.SysTick_Handler
+                0x0000000008000260       0x1c bin/blink.o
+                0x0000000008000260                SysTick_Handler
+ .text.delay_ms
+                0x000000000800027c       0x2c bin/blink.o
+                0x000000000800027c                delay_ms
+ .text.SystemInit
+                0x00000000080002a8        0xc bin/blink.o
+                0x00000000080002a8                SystemInit
+ .text.main     0x00000000080002b4       0x60 bin/blink.o
+                0x00000000080002b4                main
+ *(.glue_7)
+ .glue_7        0x0000000008000314        0x0 linker stubs
+ *(.glue_7t)
+ .glue_7t       0x0000000008000314        0x0 linker stubs
+ *(.eh_frame)
+ *(.init)
+ *(.fini)
+                0x0000000008000314                . = ALIGN (0x4)
+                0x0000000008000314                _etext = .
 
-.glue_7         0x0000000008000008        0x0
- .glue_7        0x0000000008000008        0x0 linker stubs
+.vfp11_veneer   0x0000000008000314        0x0
+ .vfp11_veneer  0x0000000008000314        0x0 linker stubs
 
-.glue_7t        0x0000000008000008        0x0
- .glue_7t       0x0000000008000008        0x0 linker stubs
+.v4_bx          0x0000000008000314        0x0
+ .v4_bx         0x0000000008000314        0x0 linker stubs
 
-.vfp11_veneer   0x0000000008000008        0x0
- .vfp11_veneer  0x0000000008000008        0x0 linker stubs
+.iplt           0x0000000008000314        0x0
+ .iplt          0x0000000008000314        0x0 bin/startup_stm32f103xb.o
 
-.v4_bx          0x0000000008000008        0x0
- .v4_bx         0x0000000008000008        0x0 linker stubs
+.rel.dyn        0x0000000008000314        0x0
+ .rel.iplt      0x0000000008000314        0x0 bin/startup_stm32f103xb.o
 
-.text.reset     0x0000000008000008       0x60
- .text.reset    0x0000000008000008       0x60 bin/blink.o
-                0x0000000008000008                reset
-
-.iplt           0x0000000008000068        0x0
- .iplt          0x0000000008000068        0x0 bin/blink.o
-
-.rel.dyn        0x0000000008000068        0x0
- .rel.iplt      0x0000000008000068        0x0 bin/blink.o
-
-.rodata
+.rodata         0x0000000008000314        0x0
+                0x0000000008000314                . = ALIGN (0x4)
  *(.rodata)
+ *(.rodata*)
+                0x0000000008000314                . = ALIGN (0x4)
 
-.bss            0x0000000020000000        0x0
+.ARM.extab
+ *(.ARM.extab* .gnu.linkonce.armextab.*)
+
+.ARM            0x0000000008000314        0x0
+                0x0000000008000314                __exidx_start = .
+ *(.ARM.exidx*)
+                0x0000000008000314                __exidx_end = .
+
+.preinit_array  0x0000000008000314        0x0
+                0x0000000008000314                PROVIDE (__preinit_array_start = .)
+ *(.preinit_array*)
+                0x0000000008000314                PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000008000314        0x0
+                0x0000000008000314                PROVIDE (__init_array_start = .)
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array*)
+                0x0000000008000314                PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000008000314        0x0
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array*)
+                [!provide]                        PROVIDE (__fini_array_end = .)
+                0x0000000008000314                _sidata = LOADADDR (.data)
+
+.data           0x0000000020000000        0x4 load address 0x0000000008000314
+                0x0000000020000000                . = ALIGN (0x4)
+                0x0000000020000000                _sdata = .
+ *(.data)
+ *(.data*)
+ .data.SystemCoreClock
+                0x0000000020000000        0x4 bin/blink.o
+                0x0000000020000000                SystemCoreClock
+                0x0000000020000004                . = ALIGN (0x4)
+                0x0000000020000004                _edata = .
+
+.igot.plt       0x0000000020000004        0x0 load address 0x0000000008000318
+ .igot.plt      0x0000000020000004        0x0 bin/startup_stm32f103xb.o
+                0x0000000020000004                . = ALIGN (0x4)
+
+.bss            0x0000000020000004        0x4 load address 0x0000000008000318
+                0x0000000020000004                _sbss = .
+                0x0000000020000004                __bss_start__ = _sbss
  *(.bss)
- .bss           0x0000000020000000        0x0 bin/blink.o
-OUTPUT(bin/firmware.elf elf32-littlearm)
+ *(.bss*)
+ .bss.systick_count
+                0x0000000020000004        0x4 bin/blink.o
+                0x0000000020000004                systick_count
+ *(COMMON)
+                0x0000000020000008                . = ALIGN (0x4)
+                0x0000000020000008                _ebss = .
+                0x0000000020000008                __bss_end__ = _ebss
 
-.debug_info     0x0000000000000000       0xbb
- .debug_info    0x0000000000000000       0xbb bin/blink.o
-
-.debug_abbrev   0x0000000000000000       0xa3
- .debug_abbrev  0x0000000000000000       0xa3 bin/blink.o
-
-.debug_aranges  0x0000000000000000       0x20
- .debug_aranges
-                0x0000000000000000       0x20 bin/blink.o
-
-.debug_ranges   0x0000000000000000       0x10
- .debug_ranges  0x0000000000000000       0x10 bin/blink.o
-
-.debug_macro    0x0000000000000000      0xa59
- .debug_macro   0x0000000000000000       0x11 bin/blink.o
- .debug_macro   0x0000000000000011      0xa48 bin/blink.o
-
-.debug_line     0x0000000000000000       0x51
- .debug_line    0x0000000000000000       0x51 bin/blink.o
-
-.debug_str      0x0000000000000000     0x2ca4
- .debug_str     0x0000000000000000     0x2ca4 bin/blink.o
-                                       0x2cb1 (size before relaxing)
-
-.comment        0x0000000000000000       0x57
- .comment       0x0000000000000000       0x57 bin/blink.o
-                                         0x58 (size before relaxing)
+._user_heap_stack
+                0x0000000020000008      0x600 load address 0x0000000008000318
+                0x0000000020000008                . = ALIGN (0x8)
+                [!provide]                        PROVIDE (end = .)
+                [!provide]                        PROVIDE (_end = .)
+                0x0000000020000208                . = (. + _Min_Heap_Size)
+ *fill*         0x0000000020000008      0x200 
+                0x0000000020000608                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000020000208      0x400 
+                0x0000000020000608                . = ALIGN (0x8)
 
 .ARM.attributes
-                0x0000000000000000       0x33
+                0x0000000000000000       0x2f
+ *(.ARM.attributes)
  .ARM.attributes
-                0x0000000000000000       0x33 bin/blink.o
+                0x0000000000000000       0x21 bin/startup_stm32f103xb.o
+ .ARM.attributes
+                0x0000000000000021       0x33 bin/init.o
+ .ARM.attributes
+                0x0000000000000054       0x33 bin/blink.o
+LOAD bin/startup_stm32f103xb.o
+LOAD bin/init.o
+LOAD bin/blink.o
+OUTPUT(bin/firmware.elf elf32-littlearm)
 
-.debug_frame    0x0000000000000000       0x2c
- .debug_frame   0x0000000000000000       0x2c bin/blink.o
+.debug_line     0x0000000000000000      0x4d0
+ .debug_line    0x0000000000000000       0x7b bin/startup_stm32f103xb.o
+ .debug_line    0x000000000000007b      0x211 bin/init.o
+ .debug_line    0x000000000000028c      0x244 bin/blink.o
+
+.debug_info     0x0000000000000000      0x878
+ .debug_info    0x0000000000000000       0x22 bin/startup_stm32f103xb.o
+ .debug_info    0x0000000000000022       0xf3 bin/init.o
+ .debug_info    0x0000000000000115      0x763 bin/blink.o
+
+.debug_abbrev   0x0000000000000000      0x297
+ .debug_abbrev  0x0000000000000000       0x12 bin/startup_stm32f103xb.o
+ .debug_abbrev  0x0000000000000012       0x9f bin/init.o
+ .debug_abbrev  0x00000000000000b1      0x1e6 bin/blink.o
+
+.debug_aranges  0x0000000000000000       0x90
+ .debug_aranges
+                0x0000000000000000       0x28 bin/startup_stm32f103xb.o
+ .debug_aranges
+                0x0000000000000028       0x20 bin/init.o
+ .debug_aranges
+                0x0000000000000048       0x48 bin/blink.o
+
+.debug_str      0x0000000000000000    0x57034
+ .debug_str     0x0000000000000000       0x5b bin/startup_stm32f103xb.o
+ .debug_str     0x000000000000005b     0x58cd bin/init.o
+                                       0x5a5e (size before relaxing)
+ .debug_str     0x0000000000005928    0x5170c bin/blink.o
+                                      0x54a98 (size before relaxing)
+
+.debug_ranges   0x0000000000000000       0x68
+ .debug_ranges  0x0000000000000000       0x20 bin/startup_stm32f103xb.o
+ .debug_ranges  0x0000000000000020       0x10 bin/init.o
+ .debug_ranges  0x0000000000000030       0x38 bin/blink.o
+
+.debug_macro    0x0000000000000000    0x1098b
+ .debug_macro   0x0000000000000000      0x13e bin/init.o
+ .debug_macro   0x000000000000013e      0xa4e bin/init.o
+ .debug_macro   0x0000000000000b8c       0x22 bin/init.o
+ .debug_macro   0x0000000000000bae       0x4c bin/init.o
+ .debug_macro   0x0000000000000bfa       0x18 bin/init.o
+ .debug_macro   0x0000000000000c12       0x94 bin/init.o
+ .debug_macro   0x0000000000000ca6       0x35 bin/init.o
+ .debug_macro   0x0000000000000cdb       0x34 bin/init.o
+ .debug_macro   0x0000000000000d0f       0x57 bin/init.o
+ .debug_macro   0x0000000000000d66      0x174 bin/init.o
+ .debug_macro   0x0000000000000eda      0x339 bin/init.o
+ .debug_macro   0x0000000000001213       0x10 bin/init.o
+ .debug_macro   0x0000000000001223       0x52 bin/init.o
+ .debug_macro   0x0000000000001275       0x1f bin/init.o
+ .debug_macro   0x0000000000001294       0x43 bin/init.o
+ .debug_macro   0x00000000000012d7       0x20 bin/init.o
+ .debug_macro   0x00000000000012f7       0x6a bin/init.o
+ .debug_macro   0x0000000000001361       0x1c bin/init.o
+ .debug_macro   0x000000000000137d       0x52 bin/init.o
+ .debug_macro   0x00000000000013cf       0x40 bin/init.o
+ .debug_macro   0x000000000000140f       0x10 bin/init.o
+ .debug_macro   0x000000000000141f       0x40 bin/init.o
+ .debug_macro   0x000000000000145f       0xd7 bin/init.o
+ .debug_macro   0x0000000000001536       0x1c bin/init.o
+ .debug_macro   0x0000000000001552       0x3d bin/init.o
+ .debug_macro   0x000000000000158f       0xbc bin/blink.o
+ .debug_macro   0x000000000000164b       0x8e bin/blink.o
+ .debug_macro   0x00000000000016d9       0x51 bin/blink.o
+ .debug_macro   0x000000000000172a       0xef bin/blink.o
+ .debug_macro   0x0000000000001819      0x1df bin/blink.o
+ .debug_macro   0x00000000000019f8       0x2e bin/blink.o
+ .debug_macro   0x0000000000001a26       0x22 bin/blink.o
+ .debug_macro   0x0000000000001a48       0x1c bin/blink.o
+ .debug_macro   0x0000000000001a64       0x22 bin/blink.o
+ .debug_macro   0x0000000000001a86       0xe5 bin/blink.o
+ .debug_macro   0x0000000000001b6b      0xd15 bin/blink.o
+ .debug_macro   0x0000000000002880     0xe09e bin/blink.o
+ .debug_macro   0x000000000001091e       0x6d bin/blink.o
+
+.comment        0x0000000000000000       0x57
+ .comment       0x0000000000000000       0x57 bin/init.o
+                                         0x58 (size before relaxing)
+ .comment       0x0000000000000057       0x58 bin/blink.o
+
+.debug_frame    0x0000000000000000      0x114
+ .debug_frame   0x0000000000000000       0x34 bin/init.o
+ .debug_frame   0x0000000000000034       0xe0 bin/blink.o

@@ -1,19 +1,34 @@
 #include <stdint.h>
 #include "stm32f1xx.h"
 
-// delay loop for 8 MHz CPU clock with optimizer enabled
-void delay(uint32_t msec)
+// The current clock frequency
+uint32_t SystemCoreClock=8000000;
+
+// Counts milliseconds
+volatile uint32_t systick_count=0;
+
+// Interrupt handler
+void SysTick_Handler()
 {
-    for (uint32_t j=0; j < 2000UL * msec; j++)
-    {
-        __NOP();
-    }
+    systick_count++;
 }
 
+// Delay some milliseconds.
+// Note that effective time may be up to 1ms shorter than requested.
+void delay_ms(int ms)
+{
+    uint32_t start=systick_count;
+    while (systick_count-start<ms);
+}
+
+// called in assembler startup file
 void SystemInit (void) { }
 
 int main()
 {
+    // Initialize systick timer for 1 ms intervals
+    SysTick_Config(SystemCoreClock/1000);
+
     // Enable Port C clock
     SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPCEN);
 
@@ -24,10 +39,10 @@ int main()
     {
         // LED Pin -> High
         WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BS13);        
-        delay(100);
+        delay_ms(250);
 
         // LED Pin -> Low
         WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BR13);        
-        delay(100);
+        delay_ms(250);
     }
 }

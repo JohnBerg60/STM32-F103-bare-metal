@@ -8,8 +8,24 @@ _estack = ORIGIN(ram) + LENGTH(ram);
 
 SECTIONS 
 {
-    .vectors : { *(.vectors) } > flash
-    .text    : { *(.text)    } > flash
-    .rodata  : { *(.rodata)  } > flash
-    .bss     : { *(.bss)     } > ram
+    .vectors : 
+    { 
+        . = ALIGN(4);
+        KEEP(*(.vectors)) 
+    } > flash
+    
+    .text    : 
+    { 
+        *(.text)    
+    } > flash
+    
+    .rodata  : 
+    { 
+        *(.rodata)  
+    } > flash
+    
+    .bss     : 
+    { 
+        *(.bss)     
+    } > ram
 }

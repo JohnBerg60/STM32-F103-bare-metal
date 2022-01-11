@@ -35,7 +35,7 @@ DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info
 CFLAGS = $(CFCOMMON) $(DEBUG)
 CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti
 
-LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map
+LDFLAGS += -Map=$(BUILDDIR)/$(TARGET).map --gc-sections
 
 # default action: build all
 all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).bin
@@ -54,7 +54,7 @@ $(BUILDDIR)/%.o: %.c Makefile
 
 # linking
 $(BUILDDIR)/$(TARGET).elf: $(OBJS) 
-	$(TOOL)gcc -T$(LDSCRIPT) $(LDFLAGS) -o $@ $^ 
+	$(TOOL)ld -T$(LDSCRIPT) $(LDFLAGS) -o $@ $^ 
 	@echo ""
 
 $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf
