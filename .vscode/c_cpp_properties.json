@@ -1,4 +1,8 @@
 {
+    "env": {
+        "stm32.family": "STM32F1",
+        "stm32.cpu": "STM32F103xB"
+    },
     "configurations": [
         {
             "name": "Linux",
@@ -6,7 +10,7 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [
-                "STM32F103xB"
+                "${stm32.cpu}"
             ],
             "compilerPath": "/usr/bin/arm-none-eabi-gcc",
             "cStandard": "gnu11",

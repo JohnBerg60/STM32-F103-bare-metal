@@ -22,6 +22,7 @@ void delay_ms(int ms)
 }
 
 // called in assembler startup file
+// in cmsis defined in source/templates/system_stm32f1xx.cB
 void SystemInit (void) { }
 void _init(void) { }
 

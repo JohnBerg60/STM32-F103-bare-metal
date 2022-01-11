@@ -1,6 +1,6 @@
 TARGET = firmware
 BUILDDIR = bin
-PROJECT = cmsis
+PROJECT =  minimal
 
 # Define chip architecture.
 MCU  = cortex-m3
@@ -10,7 +10,6 @@ INCLUDES =
 DEFINES = 
 LDSCRIPT = 
 LDFLAGS = -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -nostdlib -lgcc -lc
-CCFLAGS =
 
 -include $(PROJECT)/Makefile
 
@@ -29,8 +28,8 @@ TOOL=arm-none-eabi-
 CFCOMMON += -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -fmessage-length=0 -fdata-sections -ffunction-sections
 ASFLAGS += $(CFCOMMON) 
 
-DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
-#DEBUG = -O1 -g # optimized, and minimal debug information
+#DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
+DEBUG = -O1 -g2 # optimized, and minimal debug information
 
 # C compilation directives
 CFLAGS = $(CFCOMMON) $(DEBUG)
@@ -50,7 +49,13 @@ $(BUILDDIR)/%.o: %.s Makefile
 # compiling c
 $(BUILDDIR)/%.o: %.c Makefile
 	@test -d $(dir $@) || mkdir -p $(dir $@)
-	$(TOOL)gcc -c $(CFLAGS) $(CCFLAGS) $(INCLUDES) $(DEFINES) $< -o $@
+	$(TOOL)gcc -c $(CFLAGS) $(INCLUDES) $(DEFINES) $< -o $@
+	@echo "" 
+
+# compiling c++
+$(BUILDDIR)/%.o: %.cpp Makefile
+	@test -d $(dir $@) || mkdir -p $(dir $@)
+	$(TOOL)g++ -c $(CPFLAGS) $(INCLUDES) $(DEFINES) $< -o $@
 	@echo "" 
 
 # linking: let gcc pas stuff to the linker

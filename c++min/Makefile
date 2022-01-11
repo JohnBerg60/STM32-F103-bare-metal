@@ -1,0 +1,7 @@
+# Makefile for cpp minimal
+
+INCLUDES  += -I$(PROJECT)/Include
+
+DEFINES = -DSTM32F103xB
+
+LDSCRIPT = $(PROJECT)/STM32F103CBTx_FLASH.ld
