@@ -1,12 +1,38 @@
 
+Allocating common symbols
+Common symbol       size              file
+
+systick_count       0x4               bin/blink.o
+
 Discarded input sections
 
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
+ .group         0x0000000000000000        0xc bin/blink.o
  .text          0x0000000000000000        0x0 bin/blink.o
  .data          0x0000000000000000        0x0 bin/blink.o
  .bss           0x0000000000000000        0x0 bin/blink.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
+ .group         0x0000000000000000        0xc bin/startup.o
  .text          0x0000000000000000        0x0 bin/startup.o
  .data          0x0000000000000000        0x0 bin/startup.o
  .bss           0x0000000000000000        0x0 bin/startup.o
+ .debug_macro   0x0000000000000000      0xa48 bin/startup.o
+ .debug_macro   0x0000000000000000       0x22 bin/startup.o
+ .debug_macro   0x0000000000000000       0x8e bin/startup.o
+ .debug_macro   0x0000000000000000       0x51 bin/startup.o
+ .debug_macro   0x0000000000000000       0xef bin/startup.o
+ .debug_macro   0x0000000000000000       0x6a bin/startup.o
+ .debug_macro   0x0000000000000000      0x1df bin/startup.o
 
 Memory Configuration
 
@@ -23,86 +49,114 @@ LOAD /usr/lib/gcc/arm-none-eabi/7.3.1/thumb/v7-m/libgcc.a
 LOAD /usr/lib/gcc/arm-none-eabi/7.3.1/../../../arm-none-eabi/lib/thumb/v7-m/libc_nano.a
                 0x0000000020005000                _estack = (ORIGIN (ram) + LENGTH (ram))
 
-.vectors        0x0000000008000000        0x8
-                0x0000000008000000                . = ALIGN (0x4)
- *(.vectors)
- .vectors       0x0000000008000000        0x8 bin/startup.o
+.text           0x0000000008000000      0x1aa
+ *(.vectors .vectors.*)
+ .vectors       0x0000000008000000       0x40 bin/startup.o
                 0x0000000008000000                vectors
-
-.text
- *(.text)
-
-.glue_7         0x0000000008000008        0x0
- .glue_7        0x0000000008000008        0x0 linker stubs
-
-.glue_7t        0x0000000008000008        0x0
- .glue_7t       0x0000000008000008        0x0 linker stubs
-
-.vfp11_veneer   0x0000000008000008        0x0
- .vfp11_veneer  0x0000000008000008        0x0 linker stubs
-
-.v4_bx          0x0000000008000008        0x0
- .v4_bx         0x0000000008000008        0x0 linker stubs
-
-.text.delay     0x0000000008000008       0x24
- .text.delay    0x0000000008000008       0x24 bin/blink.o
-                0x0000000008000008                delay
-
-.text.main      0x000000000800002c       0x3c
- .text.main     0x000000000800002c       0x3c bin/blink.o
-                0x000000000800002c                main
-
-.iplt           0x0000000008000068        0x0
- .iplt          0x0000000008000068        0x0 bin/blink.o
-
-.text.Reset_Handler
-                0x0000000008000068        0x8
+ *(.text.*)
+ .text.delay    0x0000000008000040       0x2c bin/blink.o
+                0x0000000008000040                delay
+ .text.SysTick_Handler
+                0x000000000800006c       0x1c bin/blink.o
+                0x000000000800006c                SysTick_Handler
+ .text.SysTick_Config
+                0x0000000008000088       0x50 bin/blink.o
+                0x0000000008000088                SysTick_Config
+ .text.main     0x00000000080000d8       0x68 bin/blink.o
+                0x00000000080000d8                main
  .text.Reset_Handler
-                0x0000000008000068        0x8 bin/startup.o
-                0x0000000008000068                Reset_Handler
+                0x0000000008000140       0x64 bin/startup.o
+                0x0000000008000140                Reset_Handler
+ .text.Default_Handler
+                0x00000000080001a4        0x6 bin/startup.o
+                0x00000000080001a4                DebugMon_Handler
+                0x00000000080001a4                HardFault_Handler
+                0x00000000080001a4                PendSV_Handler
+                0x00000000080001a4                NMI_Handler
+                0x00000000080001a4                UsageFault_Handler
+                0x00000000080001a4                Default_Handler
+                0x00000000080001a4                MemManage_Handler
+                0x00000000080001a4                SVC_Handler
+                0x00000000080001a4                BusFault_Handler
+ *(.rodata.*)
+                0x00000000080001aa                _etext = .
 
-.rel.dyn        0x0000000008000070        0x0
- .rel.iplt      0x0000000008000070        0x0 bin/blink.o
+.glue_7         0x00000000080001ac        0x0
+ .glue_7        0x00000000080001ac        0x0 linker stubs
 
-.rodata
- *(.rodata)
+.glue_7t        0x00000000080001ac        0x0
+ .glue_7t       0x00000000080001ac        0x0 linker stubs
 
-.igot.plt       0x0000000008000070        0x0
- .igot.plt      0x0000000008000070        0x0 bin/blink.o
+.vfp11_veneer   0x00000000080001ac        0x0
+ .vfp11_veneer  0x00000000080001ac        0x0 linker stubs
 
-.bss
- *(.bss)
+.v4_bx          0x00000000080001ac        0x0
+ .v4_bx         0x00000000080001ac        0x0 linker stubs
+
+.iplt           0x00000000080001ac        0x0
+ .iplt          0x00000000080001ac        0x0 bin/blink.o
+
+.rel.dyn        0x00000000080001ac        0x0
+ .rel.iplt      0x00000000080001ac        0x0 bin/blink.o
+
+.bss            0x0000000020000000        0x4
+                0x0000000020000000                _sbss = .
+ *(.bss .bss.*)
+ *(COMMON)
+ COMMON         0x0000000020000000        0x4 bin/blink.o
+                0x0000000020000000                systick_count
+                0x0000000020000004                _ebss = .
+
+.data           0x0000000020000004        0x4 load address 0x00000000080001aa
+                0x0000000020000004                _sdata = .
+ *(.data*)
+ .data.SystemCoreClock
+                0x0000000020000004        0x4 bin/blink.o
+                0x0000000020000004                SystemCoreClock
+                0x0000000020000008                _edata = .
 OUTPUT(bin/firmware.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000      0x14c
- .debug_info    0x0000000000000000       0xc2 bin/blink.o
- .debug_info    0x00000000000000c2       0x8a bin/startup.o
+.igot.plt       0x0000000020000008        0x0 load address 0x00000000080001ae
+ .igot.plt      0x0000000020000008        0x0 bin/blink.o
 
-.debug_abbrev   0x0000000000000000      0x149
- .debug_abbrev  0x0000000000000000       0xb2 bin/blink.o
- .debug_abbrev  0x00000000000000b2       0x97 bin/startup.o
+.debug_info     0x0000000000000000      0x2d4
+ .debug_info    0x0000000000000000      0x183 bin/blink.o
+ .debug_info    0x0000000000000183      0x151 bin/startup.o
 
-.debug_loc      0x0000000000000000       0x21
- .debug_loc     0x0000000000000000       0x21 bin/blink.o
+.debug_abbrev   0x0000000000000000      0x1b2
+ .debug_abbrev  0x0000000000000000       0xec bin/blink.o
+ .debug_abbrev  0x00000000000000ec       0xc6 bin/startup.o
 
-.debug_aranges  0x0000000000000000       0x48
+.debug_aranges  0x0000000000000000       0x60
  .debug_aranges
-                0x0000000000000000       0x28 bin/blink.o
+                0x0000000000000000       0x38 bin/blink.o
  .debug_aranges
-                0x0000000000000028       0x20 bin/startup.o
+                0x0000000000000038       0x28 bin/startup.o
 
-.debug_ranges   0x0000000000000000       0x28
- .debug_ranges  0x0000000000000000       0x18 bin/blink.o
- .debug_ranges  0x0000000000000018       0x10 bin/startup.o
+.debug_ranges   0x0000000000000000       0x40
+ .debug_ranges  0x0000000000000000       0x28 bin/blink.o
+ .debug_ranges  0x0000000000000028       0x18 bin/startup.o
 
-.debug_line     0x0000000000000000       0xa4
- .debug_line    0x0000000000000000       0x63 bin/blink.o
- .debug_line    0x0000000000000063       0x41 bin/startup.o
+.debug_macro    0x0000000000000000      0xf47
+ .debug_macro   0x0000000000000000       0x63 bin/blink.o
+ .debug_macro   0x0000000000000063      0xa48 bin/blink.o
+ .debug_macro   0x0000000000000aab       0x22 bin/blink.o
+ .debug_macro   0x0000000000000acd       0x8e bin/blink.o
+ .debug_macro   0x0000000000000b5b       0x51 bin/blink.o
+ .debug_macro   0x0000000000000bac       0xef bin/blink.o
+ .debug_macro   0x0000000000000c9b       0x6a bin/blink.o
+ .debug_macro   0x0000000000000d05      0x1df bin/blink.o
+ .debug_macro   0x0000000000000ee4       0x63 bin/startup.o
 
-.debug_str      0x0000000000000000      0x149
- .debug_str     0x0000000000000000      0x119 bin/blink.o
- .debug_str     0x0000000000000119       0x30 bin/startup.o
-                                        0x113 (size before relaxing)
+.debug_line     0x0000000000000000      0x2b1
+ .debug_line    0x0000000000000000      0x16f bin/blink.o
+ .debug_line    0x000000000000016f      0x142 bin/startup.o
+
+.debug_str      0x0000000000000000     0x3b4d
+ .debug_str     0x0000000000000000     0x3acb bin/blink.o
+                                       0x3c2f (size before relaxing)
+ .debug_str     0x0000000000003acb       0x82 bin/startup.o
+                                       0x3c08 (size before relaxing)
 
 .comment        0x0000000000000000       0x57
  .comment       0x0000000000000000       0x57 bin/blink.o
@@ -116,6 +170,6 @@ OUTPUT(bin/firmware.elf elf32-littlearm)
  .ARM.attributes
                 0x0000000000000033       0x33 bin/startup.o
 
-.debug_frame    0x0000000000000000       0x6c
- .debug_frame   0x0000000000000000       0x44 bin/blink.o
- .debug_frame   0x0000000000000044       0x28 bin/startup.o
+.debug_frame    0x0000000000000000       0xe8
+ .debug_frame   0x0000000000000000       0xa0 bin/blink.o
+ .debug_frame   0x00000000000000a0       0x48 bin/startup.o
