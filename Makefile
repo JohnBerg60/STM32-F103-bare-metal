@@ -29,7 +29,7 @@ CFCOMMON += -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -f
 ASFLAGS += $(CFCOMMON) 
 
 #DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 
-DEBUG = -O0 -g3 # optimized, and minimal debug information
+DEBUG = -O1 -g2 # optimized, and minimal debug information
 
 # C compilation directives
 CFLAGS = $(CFCOMMON) $(DEBUG)
