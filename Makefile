@@ -1,6 +1,6 @@
 TARGET = firmware
 BUILDDIR = bin
-PROJECT =  minimal
+PROJECT =  projects/minimal
 
 # Define chip architecture.
 MCU  = cortex-m3
@@ -35,7 +35,7 @@ DEBUG = -O1 -g2 # optimized, and minimal debug information
 CFLAGS = $(CFCOMMON) $(DEBUG)
 CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti
 
-LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map -Wl,--gc-sections
+LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map -Wl,--gc-sections -Wl,--print-memory-usage
 
 # default action: build all
 all: $(BUILDDIR)/$(TARGET).elf $(BUILDDIR)/$(TARGET).hex $(BUILDDIR)/$(TARGET).bin
@@ -67,8 +67,10 @@ $(BUILDDIR)/%.hex: $(BUILDDIR)/%.elf
 	$(TOOL)objcopy -S -O ihex $< $@
 
 $(BUILDDIR)/%.bin: $(BUILDDIR)/%.elf
-	$(TOOL)objcopy -S -O binary $< $@	
+	$(TOOL)objcopy -S -O binary $< $@
+	@echo ""	
 	$(TOOL)size $< 
+	@echo ""
 
 clean:
 	clear

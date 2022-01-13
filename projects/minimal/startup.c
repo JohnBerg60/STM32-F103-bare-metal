@@ -11,8 +11,14 @@ extern uint32_t _edata;
 extern uint32_t _sbss;
 extern uint32_t _ebss;
 
-/* in blink.c */
+/* in main.c */
 extern void main(void);
+
+/* in libc */
+extern void __libc_init_array(void);
+
+// called by __libc_init_array
+void _init() { }
 
 void Reset_Handler(void) 
 {
@@ -30,6 +36,9 @@ void Reset_Handler(void)
     for (uint32_t *bss_ptr = &_sbss; bss_ptr < &_ebss;) {
         *bss_ptr++ = 0;
     }
+
+    // initialize c++ stuff
+    __libc_init_array();
 
     main();
 

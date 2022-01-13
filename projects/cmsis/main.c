@@ -5,7 +5,7 @@
 uint32_t SystemCoreClock=8000000;
 
 // Counts milliseconds
-volatile uint32_t systick_count=0;
+volatile uint32_t systick_count = 0;
 
 // Interrupt handler
 void SysTick_Handler()

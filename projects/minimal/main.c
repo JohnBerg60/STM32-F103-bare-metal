@@ -41,7 +41,7 @@ int main(void)
     while (1)
     {
         // simple wait
-        delay(150);
+        delay(1350);
 
         // toggle output data register pin
         *gpioc_odr ^= 1 << 13;
