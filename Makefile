@@ -32,8 +32,8 @@ ASFLAGS += $(CFCOMMON)
 DEBUG = -O1 -g2 # optimized, and minimal debug information
 
 # C compilation directives
-CFLAGS = $(CFCOMMON) $(DEBUG)
-CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti
+CFLAGS = $(CFCOMMON) $(DEBUG) -MMD -MP -MF"$(@:%.o=%.d)"
+CPFLAGS = $(CFCOMMON) $(DEBUG) -fno-exceptions -fno-rtti -MMD -MP -MF"$(@:%.o=%.d)"
 
 LDFLAGS += -Wl,-Map=$(BUILDDIR)/$(TARGET).map -Wl,--gc-sections -Wl,--print-memory-usage
 
@@ -71,6 +71,8 @@ $(BUILDDIR)/%.bin: $(BUILDDIR)/%.elf
 	@echo ""	
 	$(TOOL)size $< 
 	@echo ""
+
+-include $(wildcard $(BUILDDIR)/*.d)
 
 clean:
 	clear
