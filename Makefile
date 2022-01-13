@@ -1,6 +1,6 @@
 TARGET = firmware
 BUILDDIR = bin
-PROJECT =  projects/minimal
+PROJECT =  projects/c++min
 
 # Define chip architecture.
 MCU  = cortex-m3
