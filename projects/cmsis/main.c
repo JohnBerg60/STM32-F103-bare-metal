@@ -2,7 +2,8 @@
 #include "stm32f1xx.h"
 
 // The current clock frequency
-uint32_t SystemCoreClock=8000000;
+extern uint32_t SystemCoreClock;
+extern void init_clock();
 
 // Counts milliseconds
 volatile uint32_t systick_count = 0;
@@ -15,10 +16,10 @@ void SysTick_Handler()
 
 // Delay some milliseconds.
 // Note that effective time may be up to 1ms shorter than requested.
-void delay_ms(int ms)
+void delay_ms(uint32_t ms)
 {
-    uint32_t start=systick_count;
-    while (systick_count-start<ms);
+    uint32_t start = systick_count;
+    while (systick_count - start < ms);
 }
 
 // called in assembler startup file
@@ -27,9 +28,12 @@ void SystemInit (void) { }
 void _init(void) { }
 
 int main()
-{    
-    // Initialize systick timer for 1 ms intervals
-    SysTick_Config(SystemCoreClock/1000);
+{   
+    // Change system clock to 72 MHz using 8 MHz crystal  
+    init_clock();
+
+    // Initialize systick timer for 1 ms intervals (core_cm3.h)
+    SysTick_Config(SystemCoreClock / 1000);
 
     // Enable Port C clock
     SET_BIT(RCC->APB2ENR, RCC_APB2ENR_IOPCEN);
@@ -39,12 +43,12 @@ int main()
 
     while(1)
     {
-        // LED Pin -> High
-        WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BS13);        
-        delay_ms(250);
-
         // LED Pin -> Low
         WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BR13);        
-        delay_ms(250);
+        delay_ms(100);
+
+        // LED Pin -> High
+        WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BS13);        
+        delay_ms(900);
     }
 }
