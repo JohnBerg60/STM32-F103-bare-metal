@@ -7,6 +7,7 @@ MEMORY
 }
 
 _estack = ORIGIN(ram) + LENGTH(ram);
+/* heap_size = 0x200; */      /* required amount of heap  */
 
 SECTIONS 
 {
@@ -55,4 +56,6 @@ SECTIONS
 		*(.data .data.*);
 		_edata = .;
 	} > ram AT >flash
+
+    
 }

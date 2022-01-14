@@ -1,6 +1,6 @@
 TARGET = firmware
 BUILDDIR = bin
-PROJECT =  projects/cmsis
+PROJECT =  projects/minimal
 
 # Define chip architecture.
 MCU  = cortex-m3
@@ -25,7 +25,7 @@ vpath %.cpp $(PROJECT)
 TOOL=arm-none-eabi-
 
 # Common flags, see: https://www.mikrocontroller.net/articles/ARM_GCC
-CFCOMMON += -mcpu=$(MCU) -mthumb -Wall --specs=nosys.specs --specs=nano.specs -fmessage-length=0 -fdata-sections -ffunction-sections
+CFCOMMON += -mcpu=$(MCU) -mthumb -Wall -specs=nosys.specs -specs=nano.specs -fmessage-length=0 -fdata-sections -ffunction-sections
 ASFLAGS += $(CFCOMMON) 
 
 #DEBUG = -O0 -g3 # runs as non optimized C code, with all debug info 

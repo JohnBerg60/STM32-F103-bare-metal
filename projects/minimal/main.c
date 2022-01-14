@@ -1,11 +1,14 @@
-// idea: https://www.youtube.com/watch?v=4vgnM9-EEeA&list=LL&index=1
 #include <stdint.h>
+#include "stm32f1xx.h"
 
 // The current clock frequency
 uint32_t SystemCoreClock = 8000000;
 
 extern volatile uint32_t systick_count;
 extern void SysTick_Config(uint32_t ticks);
+extern void init_gpio();
+extern void init_usart();
+extern uint32_t print(char *string);
 
 // Delay some milliseconds.
 // Note that effective time may be up to 1ms shorter than requested.
@@ -15,35 +18,27 @@ void delay(uint32_t ms)
     while (systick_count < ends);
 }
 
-typedef volatile struct 
-{
-    uint32_t APB2ENR;
-} RCC_TypeDef;
-    
-#define RCC_APB2ENR (uint32_t)(0x40021000 + 0x18)
-#define RCC ((RCC_TypeDef *)RCC_APB2ENR)
-
 // entry after startup
 int main(void)
 {
-    volatile uint32_t *gpioc_crh = (uint32_t *)(0x40011000 + 0x04);
-    volatile uint32_t *gpioc_odr = (uint32_t *)(0x40011000 + 0x0c);
+    //char str[12];
 
     // Initialize systick timer for 1 ms intervals
     SysTick_Config(SystemCoreClock / 1000);
-
-    // enable clock to GPIO port c
-    RCC->APB2ENR |= 1 << 4;
-
-    // configure PC13 pin for open drain output, 2 MHz max
-    *gpioc_crh = (*gpioc_crh & ~(0xf << ((13 - 8) * 4))) | (6 << ((13 - 8) * 4));
+    init_gpio();
+    init_usart();
 
     while (1)
     {
-        // simple wait
-        delay(1350);
+        // reset bit 13 (=led on) from gpio C output data register
+        GPIOC->ODR &= ~(1 << 13);
+        delay(100);
 
-        // toggle output data register pin
-        *gpioc_odr ^= 1 << 13;
+        // set bit 13 (=led off) from gpio C output data register
+        GPIOC->ODR |= 1 << 13;
+        delay(900);
+
+        //sprintf(str, "%d", 42);
+        print("test - \r\n");
     }
 }

@@ -16,16 +16,14 @@ extern void main(void);
 
 /* in libc */
 extern void __libc_init_array(void);
-
-// called by __libc_init_array
-void _init() { }
+void _init() {};
 
 void Reset_Handler(void) 
-{
-	/* Copy init values from text (=flash) to data (=ram) */
+{	
     uint32_t *init_values_ptr = &_etext;
     uint32_t *data_ptr = &_sdata;
 
+    /* Copy init values from text (=flash) to data (=ram) */
     if (init_values_ptr != data_ptr) {
         for (; data_ptr < &_edata;) {
             *data_ptr++ = *init_values_ptr++;

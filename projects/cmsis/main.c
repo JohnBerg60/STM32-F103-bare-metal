@@ -1,9 +1,11 @@
 #include <stdint.h>
+#include <stdio.h>
 #include "stm32f1xx.h"
 
 // The current clock frequency
 extern uint32_t SystemCoreClock;
 extern void init_clock();
+extern void init_usart();
 
 // Counts milliseconds
 volatile uint32_t systick_count = 0;
@@ -31,6 +33,7 @@ int main()
 {   
     // Change system clock to 72 MHz using 8 MHz crystal  
     init_clock();
+    init_usart();
 
     // Initialize systick timer for 1 ms intervals (core_cm3.h)
     SysTick_Config(SystemCoreClock / 1000);
@@ -50,5 +53,7 @@ int main()
         // LED Pin -> High
         WRITE_REG(GPIOC->BSRR, GPIO_BSRR_BS13);        
         delay_ms(900);
+
+        printf("Hello World!\n");
     }
 }
