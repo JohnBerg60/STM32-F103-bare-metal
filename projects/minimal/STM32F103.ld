@@ -7,7 +7,7 @@ MEMORY
 }
 
 _estack = ORIGIN(ram) + LENGTH(ram);
-/* heap_size = 0x200; */      /* required amount of heap  */
+heap_size = 0x200;      /* required amount of heap  */
 
 SECTIONS 
 {
@@ -42,6 +42,13 @@ SECTIONS
 		PROVIDE_HIDDEN (__fini_array_end = .);
 	} > flash
 
+	.data :
+	{
+		_sdata = .;
+		*(.data .data.*);
+		_edata = .;
+	} > ram AT > flash
+
 	.bss (NOLOAD) :
 	{
 		_sbss = . ;
@@ -50,12 +57,12 @@ SECTIONS
 		_ebss = . ;
 	} > ram
 
-	.data :
-	{
-		_sdata = .;
-		*(.data .data.*);
-		_edata = .;
-	} > ram AT >flash
-
-    
+    .heap :
+    {
+        PROVIDE(_end = .);       
+        PROVIDE(end = .); /* "end" is used by newlib's syscalls!!! */
+        PROVIDE(_heap_start = end );
+        . = . + heap_size;
+        PROVIDE(_heap_end = .);
+    } > ram
 }

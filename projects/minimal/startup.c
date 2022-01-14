@@ -1,3 +1,5 @@
+// good explanation: https://interrupt.memfault.com/blog/boostrapping-libc-with-newlib#why-newlib
+// source code: https://github.com/memfault/zero-to-main
 #include <stdint.h>
 
 /* defined in linker script */
@@ -13,6 +15,7 @@ extern uint32_t _ebss;
 
 /* in main.c */
 extern void main(void);
+extern void setup(void);
 
 /* in libc */
 extern void __libc_init_array(void);
@@ -34,6 +37,8 @@ void Reset_Handler(void)
     for (uint32_t *bss_ptr = &_sbss; bss_ptr < &_ebss;) {
         *bss_ptr++ = 0;
     }
+
+    setup(); 
 
     // initialize c++ stuff
     __libc_init_array();

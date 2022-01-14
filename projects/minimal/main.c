@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 #include "stm32f1xx.h"
 
 // The current clock frequency
@@ -18,27 +19,31 @@ void delay(uint32_t ms)
     while (systick_count < ends);
 }
 
-// entry after startup
-int main(void)
-{
-    //char str[12];
-
+void setup(void) 
+{ 
     // Initialize systick timer for 1 ms intervals
     SysTick_Config(SystemCoreClock / 1000);
     init_gpio();
     init_usart();
+}
+
+// entry after startup
+int main(void)
+{
+    char buff[32]; 
+    int cnt = 0;
 
     while (1)
     {
         // reset bit 13 (=led on) from gpio C output data register
         GPIOC->ODR &= ~(1 << 13);
-        delay(100);
+        delay(50);
 
         // set bit 13 (=led off) from gpio C output data register
         GPIOC->ODR |= 1 << 13;
-        delay(900);
+        delay(250);
 
-        //sprintf(str, "%d", 42);
-        print("test - \r\n");
+        snprintf(buff, sizeof(buff), "loop: %d \r\n", cnt++);
+        print(buff);
     }
 }
